@@ -1,0 +1,13 @@
+class Solution:
+    def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
+        def recur(node):
+            if not node: return
+            recur(node.left)
+            nonlocal ans, pre
+            ans = min(ans, node.val-pre)
+            pre = node.val
+            recur(node.right)
+        pre = -inf
+        ans = inf
+        recur(root)
+        return ans
