@@ -1,0 +1,16 @@
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        ans = []
+        path = ['']*(2*n)
+        def generate(left, total):
+            if total==2*n:
+                ans.append(''.join(path))
+                return 
+            if left<n:
+                path[total]='('
+                generate(left+1, total+1)
+            if total-left<left:
+                path[total]=')'
+                generate(left, total+1)
+        generate(0, 0)
+        return ans
