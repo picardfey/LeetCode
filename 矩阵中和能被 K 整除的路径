@@ -1,0 +1,23 @@
+MOD = 10**9+7
+class Solution:
+    def numberOfPaths(self, grid: List[List[int]], k: int) -> int:
+        m, n = len(grid), len(grid[0])
+        # @cache   # 爆内存了
+        # def dfs(i, j, pathval):
+        #     if i==m-1 and j==n-1:
+        #         return 1 if (pathval+grid[i][j]) % k==0 else 0
+        #     if i>=m or j>=n: return 0
+        #     pathval+=grid[i][j]
+        #     return (dfs(i+1, j, pathval)+dfs(i, j+1, pathval)) % MOD
+        # return dfs(0, 0, 0)
+        dp = [[[0]*k for _ in range(n)] for _ in range(m)]
+        dp[0][0][grid[0][0] % k] = 1
+        for i in range(m):
+            for j in range(n):
+                    for v in range(k):
+                        s = (grid[i][j]+v) % k
+                        if i>0: dp[i][j][s] = dp[i-1][j][v]
+                        if j>0: dp[i][j][s] = (dp[i][j-1][v]+dp[i][j][s]) % MOD
+        return dp[-1][-1][0]
+
+
