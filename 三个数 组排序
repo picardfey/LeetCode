@@ -1,0 +1,16 @@
+class Solution:
+    def minimumOperations(self, nums: List[int]) -> int:
+        # 最长递增子序列，合法子序列dp
+        n = len(nums)
+        # arr = []
+        # for x in nums:
+        #     k = bisect_left(arr, x+1)
+        #     if not arr or k==len(arr):
+        #         arr.append(x)
+        #     else:
+        #         arr[k] = x
+        # return n-len(arr)
+        f = [0]*4
+        for x in nums:  # 以数x为结尾的合法序列，动态转移
+            f[x] = max(f[1:x+1])+1
+        return n-max(f)
