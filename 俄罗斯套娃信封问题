@@ -1,0 +1,12 @@
+class Solution:
+    def maxEnvelopes(self, envelopes: List[List[int]]) -> int:
+        # 最长递增子序列，二维版
+        envelopes.sort(key=lambda x: (x[0], -x[1]))
+        arr = []
+        for _, h in envelopes:
+            k = bisect_left(arr, h)
+            if not arr or k==len(arr):
+                arr.append(h)
+            else:
+                arr[k] = h
+        return len(arr)
