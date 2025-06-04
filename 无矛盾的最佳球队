@@ -1,0 +1,12 @@
+class Solution:
+    def bestTeamScore(self, scores: List[int], ages: List[int]) -> int:
+        a = list(zip(ages, scores))
+        a.sort(key=lambda x: (x[0], x[1]))
+        n = len(ages)
+        dp = [0]*n
+        for i, (_, score) in enumerate(a):
+            dp[i] = score
+            for j in range(i):
+                if a[j][1]<=score:
+                    dp[i] = max(dp[i], dp[j]+score)
+        return max(dp)
