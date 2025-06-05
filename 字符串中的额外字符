@@ -1,0 +1,13 @@
+class Solution:
+    def minExtraChar(self, s: str, dictionary: List[str]) -> int:
+        # 允许不是完美分割进字典
+        n = len(s)
+        dp = [inf]*(n+1)
+        dp[0] = 0
+        for i in range(1, n+1):
+            for j in range(i):
+                if s[j:i] not in dictionary:
+                    dp[i] = min(dp[j]+i-j, dp[i])
+                else:
+                    dp[i] = min(dp[j], dp[i])
+        return dp[-1]
