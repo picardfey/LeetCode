@@ -1,0 +1,17 @@
+class Solution:
+    def minCut(self, s: str) -> int:
+        # 一定有解，划分n-1次，怎么节省空间
+        @cache
+        def ispalind(l, r):
+            if l>=r: return True
+            return s[l]==s[r] and ispalind(l+1, r-1)
+        n = len(s)
+        dp = [inf]*n
+        for i in range(n):
+            if ispalind(0, i): 
+                dp[i] = 0
+                continue
+            for j in range(i):
+                if ispalind(j+1, i):
+                    dp[i] = min(dp[j]+1, dp[i])
+        return dp[-1]
