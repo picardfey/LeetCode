@@ -1,0 +1,11 @@
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        a = list(zip(position, speed))
+        a.sort(key=lambda x: x[0])
+        times = [(target-pos)/v for pos, v in a]
+        st = []
+        for t in times:
+            while st and t>=st[-1]:
+                st.pop()
+            st.append(t)
+        return len(st)
