@@ -1,0 +1,24 @@
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        # 两个数组一左一右, 存储比他小的最近下标
+        # 不过可以预处理左边小的下标
+        n = len(heights)
+        st = []
+        # 预处理左边最小
+        left = [-1]*n
+        for i in range(n-1, -1, -1):
+            while st and heights[i]<heights[st[-1]]:
+                j = st.pop()
+                left[j] = i
+            st.append(i)
+        st = []
+        ans = 0 
+        for i, x in enumerate(heights):
+            while st and x<heights[st[-1]]:
+                j = st.pop()
+                ans = max(ans, (i-left[j]-1)*heights[j])
+            st.append(i)
+        # 右边没有更小的了
+        for i in st:
+            ans = max(ans, heights[i]*(n-left[i]-1))
+        return ans
