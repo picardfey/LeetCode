@@ -1,0 +1,14 @@
+MOD = 10**9+7
+class Solution:
+    def sumSubarrayMins(self, arr: List[int]) -> int:
+        # 每个数它贡献了几次， 左边最小间隔*右边最小间隔*自身值
+        ans = 0
+        arr.append(-1)
+        st = [-1]
+        for right, x in enumerate(arr):
+            while len(st)>1 and x<arr[st[-1]]:
+                i = st.pop()
+                left = st[-1]
+                ans = (ans+(right-i)*(i-left)*arr[i]) % MOD
+            st.append(right)
+        return ans
