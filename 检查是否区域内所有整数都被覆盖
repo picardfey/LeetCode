@@ -1,0 +1,10 @@
+class Solution:
+    def isCovered(self, ranges: List[List[int]], left: int, right: int) -> bool:
+        max_end = max(end for _, end in ranges)
+        if right>max_end: return False
+        diff = [0]*(max_end+1)
+        for start, end in ranges:
+            diff[start-1]+=1
+            diff[end]-=1
+        return all(x>0 for x in list(accumulate(diff))[left-1:right])
+        
