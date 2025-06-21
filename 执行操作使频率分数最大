@@ -1,0 +1,12 @@
+class Solution:
+    def maxFrequencyScore(self, nums: List[int], k: int) -> int:
+  
+        nums.sort()
+        ans = s = left = 0
+        for right, x in enumerate(nums):
+            s+=x-nums[(left+right)//2]  # 滑动窗口+中位数贪心+贡献法
+            while s>k:
+                s+=nums[left]-nums[(left+right+1)//2]
+                left+=1
+            ans = max(ans, right-left+1)
+        return ans
