@@ -1,0 +1,20 @@
+class Solution:
+    def minimizeArrayValue(self, nums: List[int]) -> int:
+        # 平均化，但是只能左家右键
+        def check(mx):
+            # 前缀和的平均小于mx
+            s, avg = 0, 0
+            for x in nums:
+                s+=x
+                avg+=mx
+                if s>avg: return False
+            return True
+        left, right = (sum(nums)-1)//len(nums), max(nums)
+        while left+1<right:
+            mid = (left+right)//2
+            if check(mid):
+                right = mid
+            else: left = mid
+        return right
+
+
